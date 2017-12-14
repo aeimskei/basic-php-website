@@ -19,7 +19,7 @@ include("inc/header.php"); ?>
           <td><input type="text" id="email" name="email" /></td>
         </tr>
         <tr>
-          <th><label for="name">Suggest Item Details</label></th>
+          <th><label for="details">Suggest Item Details</label></th>
           <td><textarea name="details" id="details"></textarea></td>
         </tr>
       </table>
