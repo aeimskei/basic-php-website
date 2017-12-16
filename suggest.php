@@ -1,5 +1,8 @@
 <?php 
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = trim(filter_input(INPUT_POST,"name",FILTER_SANITIZE_STRING));
   $email = trim(filter_input(INPUT_POST,"email",FILTER_SANITIZE_EMAIL));
@@ -14,7 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
   }
   
-  require("inc/phpmailer/PHPMailer.php");
+  require 'inc/phpmailer/Exception.php';
+  require 'inc/phpmailer/PHPMailer.php';
+  
+  $mail = new PHPMailer(true);
+  
+  if (!$mail->ValidateAddress($email)) {
+    echo "Invalid Email Address";
+    exit;
+  }
   
   echo "<pre>";
   $email_body = "";
