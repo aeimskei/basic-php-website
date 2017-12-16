@@ -27,16 +27,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
   }
   
-  echo "<pre>";
   $email_body = "";
   $email_body .= "Name " . $name . "\n";
   $email_body .= "Email " . $email . "\n";
   $email_body .= "Details " . $details . "\n";
-  echo $email_body;
-  echo "</pre>";
   
-  //To Do: Send email
-  header("location:suggest.php?status=thanks");
+  try {
+
+    //Recipients
+    $mail->setFrom($email, $name);
+    $mail->addAddress('treehouse@localhost', 'Amy');     // Add a recipient
+
+    //Content
+    $mail->isHTML(false);                               // Set email format to HTML
+    $mail->Subject = 'Personal Media Library Suggestion from ' . $name;
+    $mail->Body    = $email_body;
+
+    $mail->send();
+    echo 'Message has been sent';
+    } catch (Exception $e) {
+      echo 'Message could not be sent.';
+      echo 'Mailer Error: ' . $mail->ErrorInfo;
+    }
+  
+   header("location:suggest.php?status=thanks");
 }
 
 $pageTitle = "Suggest a Media Item";
