@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
   require 'inc/phpmailer/Exception.php';
   require 'inc/phpmailer/PHPMailer.php';
+  require 'inc/phpmailer/SMTP.php';
   
   $mail = new PHPMailer(true);
   
@@ -32,25 +33,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $email_body .= "Email " . $email . "\n";
   $email_body .= "Details " . $details . "\n";
   
-  try {
-
-    //Recipients
-    $mail->setFrom($email, $name);
-    $mail->addAddress('treehouse@localhost', 'Amy');     // Add a recipient
-
-    //Content
-    $mail->isHTML(false);                               // Set email format to HTML
-    $mail->Subject = 'Personal Media Library Suggestion from ' . $name;
-    $mail->Body    = $email_body;
-
-    $mail->send();
-    echo 'Message has been sent';
-    } catch (Exception $e) {
+  $mail->setFrom($email, $name);
+  $mail->addAddress('treehouse@localhost.com', 'Amy');     // Add a recipient
+  
+  $mail->isHTML(false);                                  // Set email format to HTML
+  
+  $mail->Subject = 'Personal Media Library Suggestion from ' . $name;
+  $mail->Body    = $email_body;
+  
+  if(!$mail->send()) {
       echo 'Message could not be sent.';
       echo 'Mailer Error: ' . $mail->ErrorInfo;
-    }
+      exit;
+  }
   
-   header("location:suggest.php?status=thanks");
+  
+  header("location:suggest.php?status=thanks");
 }
 
 $pageTitle = "Suggest a Media Item";
