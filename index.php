@@ -10,7 +10,7 @@ include("inc/header.php"); ?>
 
 			<div class="wrapper">
 
-				<h2>May we suggest something?</h2>
+				<h2>May we suggest something??</h2>
 
         <ul class="items">
           <?php
